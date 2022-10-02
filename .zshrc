@@ -126,7 +126,6 @@ alias v="nvim"
 alias ls="ls -a"
 alias c="clear -x"
 alias q="exit"
-
 alias doc="cd ~/storage/shared/Documents/"
 alias .="cd ~/storage/shared/Documents/dotfiles-termux"
 alias dl="cd ~/storage/shared/Downloads/"
@@ -136,7 +135,8 @@ alias glo="glow"
 alias t="task"
 alias ta="task add"
 alias cfg="cd ~/.config"
-#
+
+# git aliases
 alias gs='git status'
 alias ga='git add -A'
 alias gp='git push'
@@ -149,10 +149,35 @@ alias gl='git log'
 alias glog='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
 
+#grep color
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
+
+#FZF
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_OPTS='--layout=reverse'
+
+#confirm before overwrite
+alias cp="cp -i -v"
+alias mv="mv -i -v"
+alias rm="rm -i -v"
+
+#lynx
+alias lynx='lynx -vikeys -accept_all_cookies'
+
 
 # vi keys
 bindkey -v
 export KEYTIMEOUT=1
+bindkey '^v' edit-command-line
+
+# use vim keys in tab complete menu
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey "^?" backward-delete-char
 
 # show hidden in tab complete
 setopt globdots
