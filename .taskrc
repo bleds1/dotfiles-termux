@@ -49,18 +49,39 @@ weekstart=Monday
 # Limit no of tasks being shown
 report.next.filter=+PENDING -BLOCKING limit:30
 
-# custom colors
-color.active=color83
+# Search is case insensitive
+search.case.sensitive=no
+
+# Daily burndown 
+alias.burndown=burndown.daily
+
+# Sort columns
+#report.list.columns=
+#report.list.labels= 
+#report.next.labels=
+#report.next.columns=
+
+# Custom colors
+color.active=color43
 color.today=color35
-color.overdue=color154
-color.due=color9
-oolor.waiting=243
+color.calendar.today=color0 on color43
+color.overdue=color9
+color.calendar.overdue=color0 on color196
+color.due=color172
+color.calendar.due=color0 on color172
+color.calendar.due.today=color0 on color172
+color.waiting=color243
 color.completed=color239
 color.scheduled=color107
-color.summary.bar=on color35
+color.calendar.scheduled=color0 on color107
+color.summary.bar=on color43
 color.recurring=color39
-color.uds.priority.H=color15
-color.uds.priority.M=color247
-color.uds.priority.L=color243
+color.uda.priority.H=color15
+color.uda.priority.M=color247
+color.uda.priority.L=color243
+color.burndown.done=on color43 
+color.burndown.pending=on color236
+color.calendar.weeknumber=color242
+color.calendar.daynumber=color255
 #
 news.version=2.6.0
