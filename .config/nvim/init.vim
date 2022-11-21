@@ -55,7 +55,7 @@ hi EndOfBuffer ctermbg=none guibg=#000000
 ".md files outside the wiki are not seen as .vimwiki
 let g:vimwiki_global_ext = 0
 
-let g:vimwiki_list = [{'path': '~/storage/shared/Documents/vimwiki/',
+let g:vimwiki_list = [{'path': '~/storage/shared/Documents/vault/',
                     \ 'syntax': 'markdown', 'ext': '.md'}]
 
 "Blinking block/line
@@ -72,10 +72,11 @@ let g:startify_lists = [
 						\ {'header': ['  ', getcwd()], 'type': 'dir' },
     		\ ]
 let g:startify_bookmarks = [ 
-						\ { 'w': '~/storage/shared/Documents/vimwiki/index.md' },
-                        \ { 'n': '~/.config/nvim/init.vim' },
-                        \ { 'd': '~/storage/shared/Documents/vimwiki/diary/diary.md' },
-					    \ { 't': '~/.tmux.conf' },
+                        \ { 'n': '~/storage/shared/Documents/dotfiles-termux/.config/nvim/init.vim' },
+                        \ { 'i': '~/storage/shared/Documents/vault/0.inbox/' },
+                        \ { 'd': '~/storage/shared/Documents/vault/0.inbox/0.diary' },
+					    \ { 't': '~/storage/shared/Documents/dotfile-termux/.tmux.conf' },
+                        \ { 'v': '~/storage/shared/Documents/vault/' },
 						\ { 'z': '~/.zshrc' },
 						\ ]
 

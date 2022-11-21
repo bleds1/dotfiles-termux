@@ -129,13 +129,13 @@ alias q="exit"
 alias doc="cd ~/storage/shared/Documents/"
 alias .="cd ~/storage/shared/Documents/dotfiles-termux"
 alias dl="cd ~/storage/shared/Downloads/"
-alias dia="cd ~/storage/shared/Documents/vimwiki/diary/"
+alias dia="cd ~/storage/shared/Documents/vault/0.inbox/0.diary/"
 alias wik="cd ~/storage/shared/Documents/vimwiki/"
 alias glo="glow"
 alias t="task"
 alias ta="task add"
 alias cfg="cd ~/.config"
-
+alias n="nvim ~/storage/shared/Documents/vault/0.inbox/$(date +%Y-%m-%d-%H%M).md"
 # git aliases
 alias gs='git status'
 alias ga='git add -A'
