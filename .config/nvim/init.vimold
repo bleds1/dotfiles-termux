@@ -4,7 +4,7 @@ set laststatus=0
 set nobackup
 set nohlsearch
 set noswapfile
-set relativenumber
+"set relativenumber
 "set scrolloff=8
 set showmatch
 set smartcase 
@@ -14,8 +14,6 @@ set splitbelow
 set tabstop=4
 set undolevels=500
 set wrap
-set t_Co=256    "set 256 colour terminal
-set wildmode=longest,list,full
 
 "netrw
 let g:netrw_banner=0
@@ -25,7 +23,6 @@ let g:netrw_winsize=20
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'arzg/vim-colors-xcode'
-Plug 'arcticicestudio/nord-vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vim-python/python-syntax'
@@ -34,13 +31,11 @@ Plug 'vimwiki/vimwiki'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'mhinz/vim-startify'
 Plug 'jiangmiao/auto-pairs'
-"Plug 'jceb/vim-orgmode'
 
 call plug#end()
 
 "Colorscheme
-"colorscheme xcodedarkhc
-colorscheme nord
+colorscheme xcodedarkhc
 
 "Cursor
 autocmd InsertEnter,InsertLeave * set cul!
@@ -78,25 +73,22 @@ let g:startify_lists = [
     		\ ]
 let g:startify_bookmarks = [ 
                         \ { 'n': '~/storage/shared/Documents/dotfiles-termux/.config/nvim/init.vim' },
-                        \ { 'i': '~/storage/shared/Documents/' },
-                        \ { 'j': '~/storage/shared/Documents/' },
-					    \ { 't': '~/storage/shared/Documents/dotfiles-termux/.tmux.conf' },
+                        \ { 'i': '~/storage/shared/Documents/org/0.inbox/' },
+                        \ { 'j': '~/storage/shared/Documents/org/0.inbox/0.journal' },
+					    \ { 't': '~/storage/shared/Documents/dotfile-termux/.tmux.conf' },
+                        \ { 'o': '~/storage/shared/Documents/org/' },
 						\ { 'z': '~/.zshrc' },
 						\ ]
 
 "keybinds
 let mapleader = "\<Space>"
-map <leader>bn :bn<CR>
-map <leader>bp :bp<CR>
+map <leader>n :bn<CR>
+map <leader>p :bp<CR>
 map <leader>bk :bd<CR>
 map <leader>e :enew<CR>
 map <leader>z :Lex<CR>
 map <leader>, :Startify<CR>
 map <leader>sv :source ~/.config/nvim/init.vim<CR>
-map <leader>f :Files!<CR>
-"map <leader>. :BLines!<CR>
-"Switch on transparency, source vimrc to turn off
-map <leader>x :hi Normal guibg=NONE ctermbg=NONE<CR>
 
 "Jump to the last position when reopening a file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif

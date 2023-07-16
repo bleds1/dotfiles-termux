@@ -4,7 +4,7 @@ set laststatus=0
 set nobackup
 set nohlsearch
 set noswapfile
-set relativenumber
+"set relativenumber
 "set scrolloff=8
 set showmatch
 set smartcase 
@@ -34,7 +34,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'mhinz/vim-startify'
 Plug 'jiangmiao/auto-pairs'
-"Plug 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode'
 
 call plug#end()
 
@@ -94,7 +94,6 @@ map <leader>z :Lex<CR>
 map <leader>, :Startify<CR>
 map <leader>sv :source ~/.config/nvim/init.vim<CR>
 map <leader>f :Files!<CR>
-"map <leader>. :BLines!<CR>
 "Switch on transparency, source vimrc to turn off
 map <leader>x :hi Normal guibg=NONE ctermbg=NONE<CR>
 
