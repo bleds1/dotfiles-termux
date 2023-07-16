@@ -122,19 +122,24 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+alias ..="cd .."
 alias v="nvim"
 alias ls="ls -a"
 alias c="clear -x"
+alias cn="clear -x && neofetch"
 alias q="exit"
+alias f="ranger"
+alias zrc="$EDITOR $HOME/.zshrc"
+alias h="history | fzf"
 alias doc="cd ~/storage/shared/Documents/"
 alias .="cd ~/storage/shared/Documents/dotfiles-termux"
 alias dl="cd ~/storage/shared/Downloads/"
-alias nn="v ~/storage/shared/Documents/org/roam/0.inbox/fleeting_notes.org"
-alias roam="cd ~/storage/shared/Documents/org/roam"
-alias t="v ~/storage/shared/Documents/org/roam/tasks.org"
+alias nn="v ~/storage/shared/Documents/roam/$(date +%Y-%m-%d-%H%M).md"
+alias ro="cd ~/storage/shared/Documents/roam"
+alias t="cat ~/storage/shared/Documents/roam/tasks.org"
 alias glo="glow"
 alias cfg="cd ~/.config"
-alias n="nvim ~/storage/shared/Documents/org/roam/0.inbox/$(date +%Y-%m-%d-%H%M).org" 
 # git aliases
 alias gs='git status'
 alias ga='git add -A'

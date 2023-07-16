@@ -4,7 +4,7 @@ set laststatus=0
 set nobackup
 set nohlsearch
 set noswapfile
-set relativenumber
+"set relativenumber
 "set scrolloff=8
 set showmatch
 set smartcase 
