@@ -140,6 +140,9 @@ alias ro="cd ~/storage/shared/Documents/roam"
 alias t="cat ~/storage/shared/Documents/roam/tasks.org"
 alias glo="glow"
 alias cfg="cd ~/.config"
+alias doomsync="~/.emacs.d/bin/doom sync"
+alias emd="emacs --daemon"
+alias emc="emacsclient -nw"
 # git aliases
 alias gs='git status'
 alias ga='git add -A'
