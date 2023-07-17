@@ -22,12 +22,12 @@
 (after! doom-modeline
   (remove-hook 'doom-modeline-mode-hook #'size-indication-mode) ; filesize in modeline
 ;; (remove-hook 'doom-modeline-mode-hook #'column-number-mode)   ; cursor column in modeline
-  (line-number-mode 1)
+  (line-number-mode -1)
   (display-time-mode -1)
   (setq doom-modeline-enable-word-count t)
 ;;(setq display-time-format "%H:%M")
   (setq display-time-format "%Y_%m_%d %H:%M")
-  (setq doom-modeline-height 15)
+  (setq doom-modeline-height 13)
   (setq display-time-default-load-average nil)
   (setq doom-modeline-buffer-encoding nil))
 ;;
@@ -59,7 +59,7 @@
 (after! dashboard
 (setq dashboard-banner-logo-title "Welcome back Bledley!")
 ;; Set the banner
-;;(setq dashboard-startup-banner "~/.doom.d/splash/doom-ascii.txt")
+(setq dashboard-startup-banner "~/.doom.d/splash/doom-ascii.txt")
 ;;(setq dashboard-startup-banner "~/.doom.d/splash/emacs-e-template.svg") ;; use custom image as banner
 ;; Value can be
 ;; - nil to display no banner
@@ -105,8 +105,8 @@
 (setq org-directory "/storage/emulated/0/Documents/roam/")
 (setq org-agenda-files
       (quote ("/storage/emulated/0/Documents/roam/tasks.org"
-              "/storage/emulated/0/Documents/roaminbox.org"
-              "/storage/emulated/0/Documents/roamrepeat.org"
+              "/storage/emulated/0/Documents/roam/inbox.org"
+              "/storage/emulated/0/Documents/roam/repeat.org"
               "/storage/emulated/0/Documents/roam/events.org"
               "/storage/emulated/0/Documents/roam/shopping.org"
               "/storage/emulated/0/Documents/roam/goals.org")))
@@ -139,6 +139,16 @@
                            (?C :foreground "#63C5B2")
                            (?D :foreground "#5B9589"))))
 ;;
+
+(add-hook! 'org-mode-hook 'org-fancy-priorities-mode)
+(add-hook! 'org-agenda-mode-hook 'org-fancy-priorities-mode)
+;;
+(after! org-fancy-priorities
+  (setq!
+   org-fancy-priorities-list
+   '("[A]" "[B]" "[C]" "[D]")
+   ))
+;;
 (after! org
 (setq!
       org-journal-time-prefix " - "
@@ -154,6 +164,32 @@
       org-agenda-max-todos 30))
 ;;
 ;; capture templates will go here
+(after! org
+(setq! org-capture-templates
+        '(("i" "Task" entry (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
+          "** TODO %?\n")
+          ("n" "Quick Note" entry (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
+          "** %?\n%U\n")
+          ("t" "Text at point" entry (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
+          "** TODO %a\n")
+         ("e" "Event" entry (file+olp "/storage/emulated/0/Documents/roam/events.org" "INBOX")
+          "** EVENT %?%^{SCHEDULED}p" :empty-lines 1)
+        ("b" "Bookmark" plain (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
+         "** %?")
+        ("g" "Goal" plain (file+olp "/storage/emulated/0/Documents/roam/goals.org" "INBOX")
+         (file "storage/emulated/0/Documents/roam/assets/templates/tpl-goals.txt") :empty-lines 1)
+         ("f" "Expenses" plain (file+olp "/storage/emulated/0/Documents/roam/expenses.org" "INBOX")
+         "** %U - %^{Amount} %^{Summary} %^g" :prepend t)
+        ("s" "Someday/Maybe" entry (file+olp "/storage/emulated/0/Documents/roam/someday.org" "INBOX")
+          "* SOMEDAY %?\n %U\n" :empty-lines 1)
+         ("w" "Weekly Review" plain (file+datetree "/storage/emulated/0/Documents/roam/weekly.org")
+         (file "storage/emulated/0/Documents/roam/assets/templates/tpl-weekly_review.txt") :empty-lines 1)
+         ("r" "Reading List" plain (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
+          "** %?" :empty-lines 1)
+         ("l" "Shopping List" plain (file "/storage/emulated/0/Documents/roam/shopping.org")
+         "* TODO %?" :empty-lines 0))))
+
+;;
 (after! org
 (setq! org-todo-keywords
       '((sequence
@@ -197,6 +233,32 @@
 ;; Focus
 (use-package! focus)
 ;;
+;; Keyboard shortcuts for regularly used files
+;;
+(defun zz/add-file-keybinding (key file &optional desc)
+  (let ((key key)
+        (file file)
+        (desc desc))
+    (map! :desc (or desc file)
+          key
+          (lambda () (interactive) (find-file file)))))
+(zz/add-file-keybinding "C-c i" "/storage/emulated/0/Documents/roam/tasks.org" "tasks.org")
+(zz/add-file-keybinding "C-c t" "/storage/emulated/0/Documents/roam/tasks.org" "tasks.org")
+(zz/add-file-keybinding "C-c e" "/storage/emulated/0/Documents/roam/events.org" "events.org")
+(zz/add-file-keybinding "C-c s" "/storage/emulated/0/Documents/roam/someday.org" "someday.org")
+(zz/add-file-keybinding "C-c r" "/storage/emulated/0/Documents/roam/reading.org" "reading.org")
+(zz/add-file-keybinding "C-c a" "/storage/emulated/0/Documents/roam/archive.org" "archive.org")
+(zz/add-file-keybinding "C-c c" "/storage/emulated/0/Documents/dotfiles-termux/.doom.d/config.el" "config.el")
+;;
+(global-set-key (kbd "C-c w") 'count-words)
+(global-set-key (kbd "C-c n") 'now)
+;;(global-set-key (kbd "C-c d") 'org-roam-dailies-goto-today)
+;;(global-set-key (kbd "C-c y") 'org-roam-dailies-goto-yesterday)
+(global-set-key (kbd "C-c m") 'global-hide-mode-line-mode)
+(global-set-key (kbd "<f12>") 'writeroom-mode)
+(global-set-key (kbd "<f11>") 'focus-mode)
+;;(global-set-key (kbd "C-c b") 'elfeed-show-visit-gui)
+(define-key global-map (kbd "C-c l") #'elfeed)
 ;;
 ;; Make a new org buffer easier (from tecosaur.github.io)
 (evil-define-command +evil-buffer-org-new (count file)
@@ -257,8 +319,99 @@
   (kbd "N") 'evil-search-previous
   (kbd "q") 'kill-this-buffer
   )
+;; Dired less details for mobile
+(defun my-dired-mode-setup ()
+  "to be run as hook for `dired-mode'."
+  (dired-hide-details-mode 1))
+
+(add-hook 'dired-mode-hook 'my-dired-mode-setup)
 ;;
+;; Elfeed
 ;;
+
+;; Load elfeed-org
+(require 'elfeed-org)
+;;
+(after! elfeed
+(elfeed-org)
+(setq elfeed-search-filter "@1-day-ago +unread"
+      elfeed-search-title-min-width 80
+      elfeed-show-entry-switch #'pop-to-buffer
+      shr-max-image-proportion 0.6)
+(add-hook! 'elfeed-show-mode-hook (hide-mode-line-mode 1))
+(add-hook! 'elfeed-search-update-hook #'hide-mode-line-mode)
+(defadvice! +rss-elfeed-wrap-h-nicer ()
+    "Enhances an elfeed entry's readability by wrapping it to a width of
+`fill-column' and centering it with `visual-fill-column-mode'."
+    :override #'+rss-elfeed-wrap-h
+    (setq-local truncate-lines nil
+                shr-width 120
+;                visual-fill-column-center-text t
+                default-text-properties '(line-height 1.1))
+    (let ((inhibit-read-only t)
+          (inhibit-modification-hooks t))
+      (visual-fill-column-mode)
+      (set-buffer-modified-p nil)))     )
+;;
+;; browse article in gui browser instead of eww
+;;(defun elfeed-show-visit-gui ()
+;;  "Wrapper for elfeed-show-visit to use gui browser instead of eww"
+;;  (interactive)
+;;  (let ((browse-url-generic-program "xdg-open"))
+;;    (elfeed-show-visit t)))
+;; Note: The customize interface is also supported.
+(setq rmh-elfeed-org-files (list "/storage/emulated/0/Documents/roam/elfeed.org"))
+(add-hook! 'elfeed-search-mode-hook #'elfeed-update)
+(after! elfeed-search
+  (set-evil-initial-state! 'elfeed-search-mode 'normal))
+(after! elfeed-show-mode
+  (set-evil-initial-state! 'elfeed-show-mode   'normal))
+;;
+(after! evil-snipe
+  (push 'elfeed-show-mode   evil-snipe-disabled-modes)
+  (push 'elfeed-search-mode evil-snipe-disabled-modes))
+;; Tecosaur keybinds modified
+(map! :map elfeed-search-mode-map
+      :after elfeed-search
+      [remap kill-this-buffer] "q"
+      [remap kill-buffer] "q"
+      :n doom-leader-key nil
+      :n "c" #'+rss/quit
+      :n "e" #'elfeed-update
+      :n "z" #'elfeed-search-untag-all-unread
+      :n "u" #'elfeed-search-tag-all-unread
+      :n "s" #'elfeed-search-live-filter
+      :n "x" #'elfeed-search-show-entry
+      :n "p" #'elfeed-show-pdf
+      :n "+" #'elfeed-search-tag-all
+      :n "-" #'elfeed-search-untag-all
+      :n "S" #'elfeed-search-set-filter
+      :n "b" #'elfeed-search-browse-url
+      :n "y" #'elfeed-search-yank)
+(map! :map elfeed-show-mode-map
+      :after elfeed-show
+      [remap kill-this-buffer] "q"
+      [remap kill-buffer] "q"
+      :n doom-leader-key nil
+      :nm "c" #'+rss/delete-pane
+      :nm "o" #'ace-link-elfeed
+      :nm "RET" #'org-ref-elfeed-add
+      :nm "n" #'elfeed-show-next
+      :nm "N" #'elfeed-show-prev
+      :nm "p" #'elfeed-show-pdf
+      :nm "+" #'elfeed-show-tag
+      :nm "-" #'elfeed-show-untag
+      :nm "s" #'elfeed-show-new-live-search
+      :nm "y" #'elfeed-show-yank)
+;;
+(evil-define-key 'normal elfeed-show-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+(evil-define-key 'normal elfeed-search-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+;;Highlight indent guides mode
+;;(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 ;; My snippet functions
 (defun my-front-matter ()
  (interactive)
@@ -286,6 +439,13 @@ categories:
 (add-hook! org-mode 'rainbow-mode)
 (add-hook! prog-mode 'rainbow-mode)
 ;;
+;; Remap space, space to switch to buffer instead of local files
+(map! :leader
+      :desc "Switch to buffer"
+      "SPC" 'switch-to-buffer)
+;;
+;; browser setting
+ (setq browse-url-browser-function 'browse-url-xdg-open)
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;

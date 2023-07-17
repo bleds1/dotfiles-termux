@@ -142,7 +142,7 @@ alias glo="glow"
 alias cfg="cd ~/.config"
 alias doomsync="~/.emacs.d/bin/doom sync"
 alias emd="emacs --daemon"
-alias emc="emacsclient -nw"
+alias em="emacsclient -nw"
 # git aliases
 alias gs='git status'
 alias ga='git add -A'
