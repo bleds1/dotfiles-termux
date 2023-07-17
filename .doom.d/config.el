@@ -443,6 +443,10 @@ categories:
 (map! :leader
       :desc "Switch to buffer"
       "SPC" 'switch-to-buffer)
+;; Easier key for terminal pop up
+(map! :leader
+      :desc "Vterm toggle"
+      "v" '+vterm/toggle)
 ;;
 ;; browser setting
  (setq browse-url-browser-function 'browse-url-xdg-open)
