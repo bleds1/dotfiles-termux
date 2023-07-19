@@ -510,6 +510,10 @@ categories:
 (map! :leader
       :desc "Switch to buffer"
       "SPC" 'switch-to-buffer)
+;; Easier key for terminal popup
+(map! :leader
+      :desc "Vterm toggle"
+      "v" '+vterm/toggle)
 ;; browser setting
  (setq browse-url-browser-function 'browse-url-xdg-open)
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
