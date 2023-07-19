@@ -21,17 +21,17 @@
 ;;
 (after! doom-modeline
   (remove-hook 'doom-modeline-mode-hook #'size-indication-mode) ; filesize in modeline
-;; (remove-hook 'doom-modeline-mode-hook #'column-number-mode)   ; cursor column in modeline
+  (remove-hook 'doom-modeline-mode-hook #'column-number-mode)   ; cursor column in modeline
   (line-number-mode -1)
   (display-time-mode -1)
   (setq doom-modeline-enable-word-count t)
 ;;(setq display-time-format "%H:%M")
   (setq display-time-format "%Y_%m_%d %H:%M")
   (setq doom-modeline-height 13)
+;;  (setq doom-modeline-battery t)
   (setq display-time-default-load-average nil)
   (setq doom-modeline-buffer-encoding nil))
 ;;
-;;(global-hide-mode-line-mode)
 ;; Disable quit confirmation message
 (setq confirm-kill-emacs nil)
 ;;
@@ -39,15 +39,18 @@
 (setq display-line-numbers-type nil)
 ;;
 ;;Better default buffer names
-(setq doom-fallback-buffer-name "*dashboard*")
+;(setq doom-fallback-buffer-name "*dashboard*")
 ;
 ; Dashboard at startup
-(require 'dashboard)
-(dashboard-setup-startup-hook)
+;(require 'dashboard)
+;(dashboard-setup-startup-hook)
 ;;
 ;;Dashboard as initial buffer with emacsclient
-(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-;;
+(setq initial-buffer-choice (lambda () (get-buffer-create "*scratch*")))
+;; Scratch buffer intital text
+(setq initial-scratch-message ";; scratch the surface ;;\n")
+(setq initial-major-mode 'fundamental-mode)
+(global-set-key (kbd "C-c s") (lambda () (interactive) (switch-to-buffer "*scratch*")))
 ;; Connect to main workspace on launch
 (after! persp-mode
   (setq persp-emacsclient-init-frame-behaviour-override "main"))
@@ -85,8 +88,6 @@
 (setq dashboard-agenda-prefix-format "%i %-12:c %s ")
 (setq dashboard-agenda-tags-format 'ignore))
 ;;
-;; Scratch buffer intital text
-(setq initial-scratch-message ";; Scratch buffer ;;\n")
 ;;
 (setq doom-theme 'doom-wilmersdorf)
   (custom-set-faces
@@ -100,33 +101,67 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "/storage/emulated/0/Documents/roam/")
+;
 
+;; map leader a (previously act on?) to my agenda view
+(map! :leader
+      :desc "My agenda custom"
+      "a" #'my-agenda-custom)
+;;
 (after! org
 (setq org-directory "/storage/emulated/0/Documents/roam/")
-(setq org-agenda-files
-      (quote ("/storage/emulated/0/Documents/roam/tasks.org"
-              "/storage/emulated/0/Documents/roam/inbox.org"
-              "/storage/emulated/0/Documents/roam/repeat.org"
-              "/storage/emulated/0/Documents/roam/events.org"
-              "/storage/emulated/0/Documents/roam/shopping.org"
-              "/storage/emulated/0/Documents/roam/goals.org")))
-      ;(directory-files-recursively "~/Dropbox/roam/" "\\.org$"))
+(setq org-agenda-files (directory-files-recursively "/storage/emulated/0/Documents/roam/" "\\.org$"))
+;; My agenda custom commands
+(defun my-agenda-custom ()
+  (interactive)
+  (org-agenda nil "n"))
+;;
+;; Org agenda custom view
+(setq org-agenda-custom-commands
+   '(("n" "Overview"
+      ((agenda ""
+        ((org-agenda-span '1)
+         (org-agenda-overriding-header "Today:")))
+       (tags-todo ":@refile:"
+                  ((org-agenda-overriding-header "Inbox (@refile):")))
+       (tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority:")))
+       (todo "ACTIVE"
+             ((org-agenda-overriding-header "Active:")))
+       (todo "NEXT"
+             ((org-agenda-overriding-header "Next Actions:")))
+       (todo ""
+             ((org-agenda-files
+               '("/storage/emulated/0/Documents/roam/tasks.org" "/storage/emulated/0/Documents/roam/shopping.org"))
+              (org-agenda-overriding-header "Other Todo's:"))))
+      nil)))
+;;
+(setq org-agenda-block-separator ?┈
+org-agenda-time-grid
+'((daily today require-timed)
+(800 1000 1200 1400 1600 1800 2000)
+" ┈┈┈┈ " "┈┈┈┈┈┈┈┈┈┈┈┈┈")
+org-agenda-current-time-string
+"! now ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈")
+;;
+(setq org-attach-id-dir "/storage/emulated/0/Documents/roam/assets/")
 (setq org-startup-folded t)
 (setq org-log-done 'time)
 (setq org-clock-into-drawer t)
 (setq org-deadline-warning-days 0)
 (setq org-agenda-span 5
       org-agenda-start-day "-1")
-(setq org-refile-targets (quote (("tasks.org" :maxlevel . 4)
-                                 ("inbox.org" :level . 4)
-                                 ("repeat.org" :level . 4)
-                                 ("bookmarks.org" :level . 4)
-                                 ("events.org" :level . 4)
-                                 ("goals.org" :level . 4)
-                                 ("archive.org" :level . 4)
-                                 ("reading.org" :level . 4)
-                                 ("shopping.org" :level . 4)
-                                 ("someday.org" :level . 4))))
+(setq org-refile-targets (quote (("/storage/emulated/0/Documents/roam/tasks.org" :maxlevel . 4)
+                                 ("/storage/emulated/0/Documents/roam/inbox.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/repeat.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/bookmarks.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/events.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/goals.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/archive.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/reading.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/shopping.org" :level . 4)
+                                 ("/storage/emulated/0/Documents/roam/someday.org" :level . 4))))
 (after! org
 (setq! org-agenda-use-tag-inheritance t
       org-ellipsis " ▾ "
@@ -139,7 +174,6 @@
                            (?C :foreground "#63C5B2")
                            (?D :foreground "#5B9589"))))
 ;;
-
 (add-hook! 'org-mode-hook 'org-fancy-priorities-mode)
 (add-hook! 'org-agenda-mode-hook 'org-fancy-priorities-mode)
 ;;
@@ -149,19 +183,27 @@
    '("[A]" "[B]" "[C]" "[D]")
    ))
 ;;
+(defun org-journal-find-location ()
+  ;; Open today's journal, but specify a non-nil prefix argument in order to
+  ;; inhibit inserting the heading; org-capture will insert the heading.
+  (org-journal-new-entry t)
+  (unless (eq org-journal-file-type 'daily)
+    (org-narrow-to-subtree))
+    (goto-char (point-max)))
+;;
 (after! org
 (setq!
-      org-journal-time-prefix " - "
-      org-journal-date-prefix " - "
+      org-journal-time-prefix "** "
+      org-journal-date-prefix "* "
       org-journal-time-format "%H:%M"
       org-journal-date-format "%Y-%m-%d"
-      org-journal-file-format "%Y_%m_%d.md"
+      org-journal-file-format "%Y_%m_%d.org"
       org-journal-dir "/storage/emulated/0/Documents/roam/journals/"
       org-superstar-headline-bullets-list '("◉" "○" "○" "○" "○" "○" "○")
       org-hide-emphasis-markers t
       org-agenda-start-with-log-mode t
       org-log-into-drawer t
-      org-agenda-max-todos 30))
+      org-agenda-max-todos 10))
 ;;
 ;; capture templates will go here
 (after! org
@@ -170,6 +212,8 @@
           "** TODO %?\n")
           ("n" "Quick Note" entry (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
           "** %?\n%U\n")
+          ("j" "Journal entry" plain (function org-journal-find-location)
+                               "** %(format-time-string org-journal-time-format)\n  - %?")
           ("t" "Text at point" entry (file+olp "/storage/emulated/0/Documents/roam/tasks.org" "INBOX")
           "** TODO %a\n")
          ("e" "Event" entry (file+olp "/storage/emulated/0/Documents/roam/events.org" "INBOX")
@@ -201,7 +245,7 @@
          "GOAL(g)"
          "PROJECT(p)"
          "EVENT(e)"
-         "REPEAT(R)"
+         "HABIT(h)"
          "REVIEW(r)"
          "SOMEDAY(s)"
          "|"
@@ -219,12 +263,37 @@
        ("GOAL" :foreground "#65DDA3" :weight bold :underline t)
        ("PROJECT" :foreground "#768EC3" :weight bold :underline t)
        ("EVENT" :foreground "#5099DA" :weight bold :underline t)
-       ("REPEAT" :foreground "#57D1B9" :weight bold :underline t)
+       ("HABIT" :foreground "#C280A0" :weight bold :underline t)
        ("REVIEW" :foreground "#8C8DFF" :weight bold :underline t)
        ("DONE" :foreground "#757575" :weight bold :underline t)
        ("CANCELLED" :foreground "#ff6480" :weight bold :underline t))))
 ;;
+(after! org
+(setq! org-tag-faces
+   '(("@habit" :foreground "#C280a0")
+     ("@important" :foreground "#ff6480")
+     ("@error" :foreground "#c280a0")
+     ("@art" :foreground "#FFFBB8")
+     ("@read" :foreground "#65DDA3")
+     ("@health" :foreground "#65DDA3")
+     ("@events" :foreground "#65DDA3")
+     ("@errands" :foreground "#65DDA3")
+     ("@domestic" :foreground "#65DDA3")
+     ("@shopping" :foreground "#93A1EA")
+     ("@finances" :foreground "#93A1EA")
+     ("@computer" :foreground "#8C8DFF")
+     ("@emacs" :foreground "#8C8DFF")
+     ("@email" :foreground "#8C8DFF")
+     ("@writing" :foreground "#8C8DFF")
+     ("@blog" :foreground "#8C8DFF")
+     ("@review" :foreground "#8C8DFF")
+     ("@research" :foreground "#8C8DFF"))))
 ;; org-roam stuff goes here
+;;
+(require 'org-habit)
+  (setq org-habit-following-days 7)
+  (setq org-habit-preceding-days 35)
+  (setq org-habit-show-habits t)
 ;;
 ;; Beacon global minor mode
 (use-package! beacon)
@@ -245,7 +314,7 @@
 (zz/add-file-keybinding "C-c i" "/storage/emulated/0/Documents/roam/tasks.org" "tasks.org")
 (zz/add-file-keybinding "C-c t" "/storage/emulated/0/Documents/roam/tasks.org" "tasks.org")
 (zz/add-file-keybinding "C-c e" "/storage/emulated/0/Documents/roam/events.org" "events.org")
-(zz/add-file-keybinding "C-c s" "/storage/emulated/0/Documents/roam/someday.org" "someday.org")
+;;(zz/add-file-keybinding "C-c s" "/storage/emulated/0/Documents/roam/someday.org" "someday.org")
 (zz/add-file-keybinding "C-c r" "/storage/emulated/0/Documents/roam/reading.org" "reading.org")
 (zz/add-file-keybinding "C-c a" "/storage/emulated/0/Documents/roam/archive.org" "archive.org")
 (zz/add-file-keybinding "C-c c" "/storage/emulated/0/Documents/dotfiles-termux/.doom.d/config.el" "config.el")
@@ -327,8 +396,6 @@
 (add-hook 'dired-mode-hook 'my-dired-mode-setup)
 ;;
 ;; Elfeed
-;;
-
 ;; Load elfeed-org
 (require 'elfeed-org)
 ;;
@@ -413,14 +480,14 @@
 ;;Highlight indent guides mode
 ;;(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 ;; My snippet functions
-(defun my-front-matter ()
+(defun my-md-front-matter ()
  (interactive)
  (insert "---\ntitle: ${title}\nid: %<%Y_%m_%d_%H%M>\ndate: %U\ntags: \n---\n")
  )
 ;; Timestamp
 (defun now ()
  (interactive)
- (insert (format-time-string " - %H:%M")
+ (insert (format-time-string "** %H:%M")
  ))
 ;;
 ;; My jekyll front matter
@@ -443,11 +510,6 @@ categories:
 (map! :leader
       :desc "Switch to buffer"
       "SPC" 'switch-to-buffer)
-;; Easier key for terminal pop up
-(map! :leader
-      :desc "Vterm toggle"
-      "v" '+vterm/toggle)
-;;
 ;; browser setting
  (setq browse-url-browser-function 'browse-url-xdg-open)
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
