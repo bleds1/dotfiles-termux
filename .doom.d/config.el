@@ -1,14 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-;;(setq user-full-name "John Doe"
-;;      user-mail-address "john@doe.com")
-
 ;; Delete files to trash
 (setq-default
       delete-by-moving-to-trash t)
@@ -64,13 +55,6 @@
 ;; Set the banner
 (setq dashboard-startup-banner "~/.doom.d/splash/doom-ascii.txt")
 ;;(setq dashboard-startup-banner "~/.doom.d/splash/emacs-e-template.svg") ;; use custom image as banner
-;; Value can be
-;; - nil to display no banner
-;; - 'official which displays the official emacs logo
-;; - 'logo which displays an alternative emacs logo
-;; - 1, 2 or 3 which displays one of the text banners
-;; - "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
-;; - a cons of '("path/to/your/image.png" . "path/to/your/text.txt")
 ;;
 (setq dashboard-items '((recents  . 5)
                         (agenda . 5)
@@ -126,15 +110,15 @@
                   ((org-agenda-overriding-header "Inbox (@refile):")))
        (tags "PRIORITY=\"A\""
                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-overriding-header "High-priority:")))
+                 (org-agenda-overriding-header "High Priority:")))
        (todo "ACTIVE"
              ((org-agenda-overriding-header "Active:")))
        (todo "NEXT"
-             ((org-agenda-overriding-header "Next Actions:")))
+             ((org-agenda-overriding-header "Projects (Next Actions):")))
        (todo ""
              ((org-agenda-files
                '("/storage/emulated/0/Documents/roam/tasks.org" "/storage/emulated/0/Documents/roam/shopping.org"))
-              (org-agenda-overriding-header "Other Todo's:"))))
+              (org-agenda-overriding-header "Other Tasks:"))))
       nil)))
 ;;
 (setq org-agenda-block-separator ?┈
@@ -153,7 +137,6 @@ org-agenda-current-time-string
 (setq org-agenda-span 5
       org-agenda-start-day "-1")
 (setq org-refile-targets (quote (("/storage/emulated/0/Documents/roam/tasks.org" :maxlevel . 4)
-                                 ("/storage/emulated/0/Documents/roam/inbox.org" :level . 4)
                                  ("/storage/emulated/0/Documents/roam/repeat.org" :level . 4)
                                  ("/storage/emulated/0/Documents/roam/bookmarks.org" :level . 4)
                                  ("/storage/emulated/0/Documents/roam/events.org" :level . 4)
@@ -169,10 +152,10 @@ org-agenda-current-time-string
       org-priority-highest '?A
       org-priority-lowest '?D
       org-default-priority '?C
-      org-priority-faces '((?A :foreground "#2FF9D1")
-                           (?B :foreground "#57D1B9")
-                           (?C :foreground "#63C5B2")
-                           (?D :foreground "#5B9589"))))
+      org-priority-faces '((?A :foreground "#989DAF")
+                           (?B :foreground "#8C92A6")
+                           (?C :foreground "#80869C")
+                           (?D :foreground "#757C94"))))
 ;;
 (add-hook! 'org-mode-hook 'org-fancy-priorities-mode)
 (add-hook! 'org-agenda-mode-hook 'org-fancy-priorities-mode)
@@ -238,11 +221,11 @@ org-agenda-current-time-string
 (setq! org-todo-keywords
       '((sequence
          "TODO(t)"
-         "ACTIVE(a)"
+         "STARTED(s)"
          "NEXT(n)"
-         "LATER(l)"
          "IDEA(i)"
          "GOAL(g)"
+         "AREA(a)"
          "PROJECT(p)"
          "EVENT(e)"
          "HABIT(h)"
@@ -252,47 +235,30 @@ org-agenda-current-time-string
          "DONE(d)"
          "WAITING(w)"
          "CANCELLED(c)" ))))
-(setq! org-todo-keyword-faces ;these colours are not working/defined by theme?
-      '(("TODO" :foreground "#2FF9D1" :weight bold :underline t)
-       ("ACTIVE" :foreground "#66FFD6" :weight bold :underline t)
-       ("NEXT" :foreground "#42F0C1" :weight bold :underline t)
-       ("LATER" :foreground "#AAAAE1" :weight bold :underline t)
-       ("IDEA" :foreground "#C280A0" :weight bold :underline t)
-       ("SOMEDAY" :foreground "#AAAAE1" :weight bold :underline t)
-       ("WAITING" :foreground "#AAAAE1" :weight bold :underline t)
-       ("GOAL" :foreground "#65DDA3" :weight bold :underline t)
-       ("PROJECT" :foreground "#768EC3" :weight bold :underline t)
-       ("EVENT" :foreground "#5099DA" :weight bold :underline t)
-       ("HABIT" :foreground "#C280A0" :weight bold :underline t)
-       ("REVIEW" :foreground "#8C8DFF" :weight bold :underline t)
-       ("DONE" :foreground "#757575" :weight bold :underline t)
-       ("CANCELLED" :foreground "#ff6480" :weight bold :underline t))))
 ;;
+(setq! org-todo-keyword-faces ;these colours are not working/defined by theme?
+      '(("TODO" :foreground "#C280a0" :weight bold)
+       ("STARTED" :foreground "#66FFD6" :weight bold)
+       ("NEXT" :foreground "#FFFBB8" :weight bold)
+       ("IDEA" :foreground "#C280A0" :weight bold)
+       ("SOMEDAY" :foreground "#AAAAE1" :weight bold)
+       ("WAITING" :foreground "#AAAAE1" :weight bold)
+       ("GOAL" :foreground "#65DDA3" :weight bold)
+       ("AREA" :foreground "#8C8DFF" :weight bold)
+       ("PROJECT" :foreground "#8C8DFF" :weight bold)
+       ("EVENT" :foreground "#5099DA" :weight bold)
+       ("HABIT" :foreground "#C280A0" :weight bold)
+       ("REVIEW" :foreground "#8C8DFF" :weight bold)
+       ("DONE" :foreground "#2FF9D1" :weight bold)
+       ("CANCELLED" :foreground "#80869c" :weight bold))))
 (after! org
 (setq! org-tag-faces
    '(("@habit" :foreground "#C280a0")
-     ("@important" :foreground "#ff6480")
-     ("@error" :foreground "#c280a0")
-     ("@art" :foreground "#FFFBB8")
-     ("@read" :foreground "#65DDA3")
-     ("@health" :foreground "#65DDA3")
-     ("@events" :foreground "#65DDA3")
-     ("@errands" :foreground "#65DDA3")
-     ("@domestic" :foreground "#65DDA3")
-     ("@shopping" :foreground "#93A1EA")
-     ("@finances" :foreground "#93A1EA")
-     ("@computer" :foreground "#8C8DFF")
-     ("@emacs" :foreground "#8C8DFF")
-     ("@email" :foreground "#8C8DFF")
-     ("@writing" :foreground "#8C8DFF")
-     ("@blog" :foreground "#8C8DFF")
-     ("@review" :foreground "#8C8DFF")
-     ("@research" :foreground "#8C8DFF"))))
+     ("@important" :foreground "#c280a0"))))
 ;; org-roam stuff goes here
-;;
 (require 'org-habit)
   (setq org-habit-following-days 7)
-  (setq org-habit-preceding-days 35)
+  (setq org-habit-preceding-days 30)
   (setq org-habit-show-habits t)
 ;;
 ;; Beacon global minor mode
