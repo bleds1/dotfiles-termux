@@ -4,25 +4,7 @@
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
-(package! solaire-mode :disable t)
-;;
-(package! org-fancy-priorities)
-;;
-;;(package! highlight-indent-guides)
-;;
-;;(package! peep-dired)
-;;
-(package! rainbow-mode)
-;;
-;;(package! dashboard)
-;;
-(package! beacon)
-;
-(package! focus)
-;;
-(package! nov)
-;;(package! md-roam
-;;  :recipe (:host github :repo "nobiot/md-roam"))
+
 ;;
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
@@ -58,7 +40,6 @@
 ;; Use `:pin' to specify a particular commit to install.
 ;(package! builtin-package :pin "1a2b3c4d5e")
 
-
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
 ;(unpin! pinned-package)
@@ -66,3 +47,24 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! solaire-mode :disable t)
+;;
+(package! org-fancy-priorities)
+;;
+(package! highlight-indent-guides)
+;;
+(package! peep-dired)
+;;
+(package! rainbow-mode)
+;;
+(package! beacon)
+;
+(package! focus)
+;;
+(package! nov)
+;;
+;; (package! minimap)
+;;
+;;(package! md-roam
+;;  :recipe (:host github :repo "nobiot/md-roam"))
