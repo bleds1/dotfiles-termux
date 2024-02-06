@@ -2,13 +2,18 @@
 
 * Bledleys Termux dotfiles
 
-My Termux dotfiles
 dotfiles-termux
 
-These configs have slight modifications and simplifications from my desktop dotfiles repo.
+These configs have slight modifications and simplifications from my desktop dotfiles repo. I'm very bad at keeping these up to date. I rarely use this stuff on mobile.
 
 ** Doom Emacs
 
 ** Zsh
 
 ** Neovim
+
+** Ranger
+
+** Termux
+
+** Newsboat
