@@ -1,6 +1,6 @@
-"set nu
+set nu
 set hidden
-set laststatus=0
+"set laststatus=0
 set nobackup
 set nohlsearch
 set noswapfile
@@ -89,10 +89,10 @@ let mapleader = "\<Space>"
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 map <leader>bk :bd<CR>
-map <leader>e :enew<CR>
-map <leader>z :Lex<CR>
+map <leader>nn :enew<CR>
+map <leader>oo :Hex<CR>
 map <leader>, :Startify<CR>
-map <leader>sv :source ~/.config/nvim/init.vim<CR>
+map <leader>so :source ~/.config/nvim/init.vim<CR>
 map <leader>f :Files!<CR>
 "map <leader>. :BLines!<CR>
 "Switch on transparency, source vimrc to turn off

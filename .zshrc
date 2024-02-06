@@ -135,14 +135,13 @@ alias h="history | fzf"
 alias doc="cd ~/storage/shared/Documents/"
 alias .="cd ~/storage/shared/Documents/dotfiles-termux"
 alias dl="cd ~/storage/shared/Downloads/"
-alias nn="v ~/storage/shared/Documents/roam/$(date +%Y-%m-%d-%H%M).md"
-alias ro="cd ~/storage/shared/Documents/roam"
-alias t="cat ~/storage/shared/Documents/roam/tasks.org"
+alias nn="v ~/storage/shared/Documents/vault/0\ Fleeting\ Notes/$(date +%Y-%m-%d-%H%M).md"
 alias glo="glow"
 alias cfg="cd ~/.config"
 alias doomsync="~/.emacs.d/bin/doom sync"
+alias zet="~/.shortcuts/zet.sh"
 alias emd="emacs --daemon"
-alias em="emacsclient -nw"
+alias e="emacsclient -nw"
 # git aliases
 alias gs='git status'
 alias ga='git add -A'
@@ -155,6 +154,10 @@ alias gco='git checkout'
 alias gl='git log'
 alias glog='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
+
+#tmux
+alias t="tmux"
+alias ta="tmux attach"
 
 #grep color
 alias grep="grep --color=auto"
