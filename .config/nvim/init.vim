@@ -86,6 +86,8 @@ let g:startify_bookmarks = [
 
 "keybinds
 let mapleader = "\<Space>"
+map <leader>fs :w!<CR>
+map <leader>w :w!<CR>
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 map <leader>bk :bd<CR>
