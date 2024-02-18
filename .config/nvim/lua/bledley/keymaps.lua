@@ -11,7 +11,6 @@ vim.keymap.set("n", "<leader>sc", ":Telescope commands<CR>")
 vim.keymap.set("n", "<leader>sg", ":Telescope git_status<CR>")
 vim.keymap.set("n", "<leader>sm", ":Telescope man_pages<CR>")
 vim.keymap.set("n", "<leader>tt", ":Twilight<CR>")
-
 -- rgrep
 vim.keymap.set("n", "<leader>rg", vim.cmd.Rg)
 -- Buffers
@@ -76,15 +75,15 @@ end
 -- Set a keybinding to call the get_word_count function
 vim.api.nvim_set_keymap('n', '<leader>cw', ':lua Get_word_count()<CR>', { noremap = true, silent = true })
 -- Obsidian.nvim
-vim.keymap.set("n", "<leader>od", ":ObsidianToday<CR>")
-vim.keymap.set("n", "<leader>oy", ":ObsidianYesterday<CR>")
-vim.keymap.set("n", "<leader>oT", ":ObsidianTomorrow<CR>")
-vim.keymap.set("n", "<leader>ot", ":ObsidianTag<CR>")
-vim.keymap.set("n", "<leader>on", ":ObsidianNew<CR>")
-vim.keymap.set("n", "<leader>or", ":ObsidianRename<CR>")
-vim.keymap.set("n", "<leader>oi", ":ObsidianTemplate<CR>")
-vim.keymap.set("n", "<leader>os", ":ObsidianSearch<CR>")
-vim.keymap.set("n", "<leader>so", ":ObsidianSearch<CR>")
+-- vim.keymap.set("n", "<leader>od", ":ObsidianToday<CR>")
+-- vim.keymap.set("n", "<leader>oy", ":ObsidianYesterday<CR>")
+-- vim.keymap.set("n", "<leader>oT", ":ObsidianTomorrow<CR>")
+-- vim.keymap.set("n", "<leader>ot", ":ObsidianTag<CR>")
+-- vim.keymap.set("n", "<leader>on", ":ObsidianNew<CR>")
+-- vim.keymap.set("n", "<leader>or", ":ObsidianRename<CR>")
+-- vim.keymap.set("n", "<leader>oi", ":ObsidianTemplate<CR>")
+-- vim.keymap.set("n", "<leader>os", ":ObsidianSearch<CR>")
+-- vim.keymap.set("n", "<leader>so", ":ObsidianSearch<CR>")
 -- Packer
 vim.keymap.set("n", "<leader>ps", ":PackerSync<CR>")
 vim.keymap.set("n", "<leader>pc", ":PackerClean<CR>")
@@ -95,18 +94,16 @@ vim.keymap.set("n", "<leader>st", ":TodoLocList<CR>")
 -- Telescope
 vim.keymap.set("n", "<leader>ss", ":Telescope<CR>")
 -- Markdown Preview
-vim.keymap.set("n", "<leader>mp", ":MarkdownPreview<CR>")
-vim.keymap.set("n", "<leader>mx", ":MarkdownStop<CR>")
+-- vim.keymap.set("n", "<leader>mp", ":MarkdownPreview<CR>")
+-- vim.keymap.set("n", "<leader>mx", ":MarkdownStop<CR>")
 -- Taskwarrior terminal popup
-vim.keymap.set("n", "<leader>nt", ":! task project:Next<CR>")
-vim.keymap.set("n", "<leader>t", ":! task<CR>")
-vim.keymap.set("n", "<leader>at", ":! task add ")
+-- vim.keymap.set("n", "<leader>nt", ":! task project:Next<CR>")
+-- vim.keymap.set("n", "<leader>t", ":! task<CR>")
+-- vim.keymap.set("n", "<leader>at", ":! task add ")
 -- Go to vault dir
-vim.keymap.set("n", "<leader>gv", ":cd ~/Dropbox/vault/<CR>")
+vim.keymap.set("n", "<leader>gv", ":cd ~/storage/shared/Documents/vault/<CR>")
 -- Go to dotfiles dir
-vim.keymap.set("n", "<leader>g.", ":cd ~/dotfiles/<CR>")
--- Go to blog dir
-vim.keymap.set("n", "<leader>gb", ":cd ~/sba/<CR>")
+vim.keymap.set("n", "<leader>g.", ":cd ~/storage/shared/Documents/dotfiles-termux/<CR>")
 -- Go to home dir
 vim.keymap.set("n", "<leader>gh", ":cd<CR>")
 -- exbookmarks
