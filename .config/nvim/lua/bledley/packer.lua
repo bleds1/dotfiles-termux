@@ -32,13 +32,6 @@ return require('packer').startup(function(use)
     use ("nvim-lua/popup.nvim")
     use ("lifer0se/ezbookmarks.nvim")
     use ("SmiteshP/nvim-navic")
-    use({
-        "epwalsh/obsidian.nvim",
-        tag = "*",  -- recommended, use latest release instead of latest commit
-        requires = {
-        "nvim-lua/plenary.nvim",
-        },
-        })
     use{
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
