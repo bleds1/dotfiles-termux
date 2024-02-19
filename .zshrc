@@ -199,3 +199,6 @@ setopt globdots
 #supress warning
 #
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+eval $(ssh-agent -s)
+ssh-add  ~/.ssh/id_ed25519
